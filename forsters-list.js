@@ -9,9 +9,15 @@ if (Meteor.isClient) {
 	  closedTasks: function() {
 		  
 		  if (Session.get("sortCompleted")) {
-		  	 return Tasks.find({standing: "closed"});
+		  	 // return Tasks.find({standing: "closed"});
+ 			return Tasks.find(
+ 				{ standing: { $in: ["closed", "dismissed"]}}
+ 			);
 		  } else {
-		  	return Tasks.find({standing: "closed"}, {sort: {deletedAt: -1}});
+				// return Tasks.find({ standing: "closed"}, {sort: {deletedAt: -1}});
+			return Tasks.find(
+				{ standing: { $in: ["closed", "dismissed"]}}, {sort: {deletedAt: -1}}
+			);
 		  }
 		  
 	  }, 
@@ -25,7 +31,8 @@ if (Meteor.isClient) {
          long: "dddd DD.MM.YYYY HH:mm"
   };
   
-  // Use UI.registerHelper..
+  // Use UI.registerHelper...
+  // Format the date
   UI.registerHelper("formatDate", function(deletedAt, format) {
     if (moment) {
       // can use other formats like 'lll' too
@@ -37,13 +44,14 @@ if (Meteor.isClient) {
     }
   });
   
-  // UI.registerHelper("formatURL", function(text) {
-  //
-  // 	  return linkifyStr(text, { defaultProtocol: 'http'});
-  //
-  // });
-  
-  Template.body.events({
+  UI.registerHelper("isDismissed", function(standing) {
+	  if (standing == "dismissed") {
+  		  return "bg-warning";
+  	  } else {
+  		  return "";
+  	  }
+  }); 	  
+    Template.body.events({
 	  
 	  // Add a new To-do
 	  "submit .new-task": function(event) {
@@ -88,6 +96,9 @@ if (Meteor.isClient) {
 	  }, 
 	  "click .btnClose": function() {
 		  Tasks.update( this._id, {$set: {standing: "closed", deletedAt: new Date()} });
+	  }, 
+	  "click .btnDismiss": function() {
+		  Tasks.update( this._id, {$set: {standing: "dismissed", deletedAt: new Date()} });
 	  }, 
 	  "click .getFocus": function(e) {
 		  
