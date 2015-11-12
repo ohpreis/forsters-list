@@ -12,7 +12,7 @@ The system consists of one long list of everything you want to get done, a singl
 Start with adding todos
 Add new to dos as you think of them. Everything new is added to the bottom of the list.  
 
-> **Caution**: Only enter "to do" items, and not events. You easily can spot events if there is a date and time attached, like your next dentist appointment or the meeting with your boss next Wednesday at 11 a.m. This are items should be added to your calendar, preferably with a reminder set so you don't miss them.
+> **Caution**: Only enter "to do" items, and not events. You easily can spot events if there is a date and time attached, like your next dentist appointment or the meeting with your boss next Wednesday at 11 a.m. Events are items should be added to your calendar, preferably with a reminder set so you don't miss them.
 
 
 **Here is the basic work through.**
