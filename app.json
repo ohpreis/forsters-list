@@ -1,0 +1,13 @@
+{
+  "name":"forsters-list",
+  "description":"A simple todo list based on David Forster's methodology",
+  "scripts":{},
+  "env":{
+    "ROOT_URL":{
+      "required":true
+    }
+  },
+  "addons":[
+    "mongolab"
+  ]
+}
