@@ -1,7 +1,9 @@
 /* CSS declarations go here */
 
 
-body { }
+body {
+	margin-top: 60px; 
+}
 .blurredstuff {
 	-webkit-filter: blur(1px);
 	opacity: .5;
@@ -13,7 +15,7 @@ body { }
 
 .doubleFocus {
 	font-size: 145%;
-	padding: 40px; 
+	padding: 40px;
 	border: thin solid gray;
 	margin: 6px 0;
 }
