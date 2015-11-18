@@ -1,21 +1,38 @@
 /* CSS declarations go here */
 
 
-body {
-	margin-top: 60px; 
+html, body {
+
+}
+
+#loginBtn {
+	margin-top: 8px;
 }
 .blurredstuff {
 	-webkit-filter: blur(1px);
 	opacity: .5;
 }
 
-.getFocus {
-	padding: 0 0 10px 0;
+.closed {
+	padding-top: 4px;
+}
+.bg-dismissed {
+	color: #F0E8DD;
+}
+.bg-closed {
+	color: #666;
+}
+.magellan-container {
+	background-color: #ccc;
+}
+#footer {
+
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	background-color: black;
 }
 
-.doubleFocus {
-	font-size: 145%;
-	padding: 40px;
-	border: thin solid gray;
-	margin: 6px 0;
+form {
+	margin-top: 1rem;
 }

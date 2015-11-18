@@ -1,132 +1,184 @@
 <head>
 	<title>Forster's List</title>
+
 </head>
 
 <body>
 
-	<!-- Fixed navbar -->
-<nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-					data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">Forster's List</a>
+	<!-- Title and Login Button -->
+	<div class="row">
+		<div class="small-6 large-6 columns">
+			<h3>Forster's List</h3>
 		</div>
-		<div id="navbar" class="navbar-collapse collapse">
-			<ul class="nav navbar-nav">
-				<li class="active"><a href="/">Inbox</a></li>
-				<li><a href="about.html">About</a></li>
-				<li><a href="#contact">Help</a></li>
-			</ul>
-			<ul class="nav navbar-nav navbar-right">
-				<li class="active"><p style="margin-top: 15px;">{{> loginButtons}}</p></li>
-			</ul>
-		</div><!--/.nav-collapse -->
+		<div class="small-6 large-6  columns">
+			<div id="loginBtn">{{> loginButtons}}</div>
+		</div>
 	</div>
-</nav>
 
-	<!-- Main Container -->
-	<div class="container">
-
-		<p class="lead">Get stuff done!</p>
-
-
-{{#if currentUser}}
-		{{#if tasks.count != undefined}}
-
-			<h3>Inbox <span class="badge">{{tasks.count}}</span></h3>
-
-
-			{{#each tasks}}
-
-
-					{{> task}}
-
-
-			{{/each}}
-
-		{{else}}
-
-			<p>Nothing to show yet. Get started by entering a few items you like to get done!</p>
-
-		{{/if}}
-
-
-		<form class="new-task">
-			<div class="input-group">
-				<input name="text" type="text" class="form-control input-lg" placeholder="I need to ..." />
-				<span class="input-group-btn">
-					<button class="btn btn-default input-lg" type="submit">Go!</button>
-				</span>
-			</div><!-- /input-group -->
-		</form>
-
-		<hr />
-
-		<h3>Stuff thats done <span class="badge">{{closedTasks.count}}</span> </h3>
-
-		<div class="checkbox">
-		    <label class="sort-it">
-		      <input type="checkbox" checked={{sortCompleted}}> Show oldest first
-		    </label>
+	<!-- Subtitle and spacer -->
+	<div class="row">
+		<div class="small-12">
+			<div class="magellan-container" data-magellan-expedition="fixed">
+				<dl class="sub-nav">
+					<dd data-magellan-arrival="todos"><a href="#todos">Todos</a></dd>
+					<dd data-magellan-arrival="done-dismissed"><a href="#done-dismissed">Done/Dismissed</a></dd>
+				</dl>
+			</div>
 		</div>
+	</div>
+
+	{{#if currentUser}}
 
 
-		{{#if closedTasks.count != undefined}}
+			{{> todos}}
 
-			<p><br /></p>
-			{{#each closedTasks}}
 
-					{{> closedTask}}
+			{{> closedTask}}
 
-			{{/each}}
 
-		{{else}}
+	{{/if}} <!-- end: currentUser -->
 
-		<p>No completed tasks yet!</p>
 
-		{{/if}}
-{{/if}} <!-- end: if currentUser -->
+		<!-- Input new Todos -->
+		<div id="footer">
+		<form class="new-task">
 
-	</div><!-- END: Main Container -->
+						<div class="row collapse">
 
+							<div class="small-10 columns">
+								<input type="text" name="text" placeholder="I want to..." />
+							</div>
+							<div class="small-2 columns">
+								<input type="submit" class="button postfix" value="Go" />
+							</div>
+
+						</div>
+		</form>
+	</div>
+
+	<br /><br /><br />
 </body>
 
+<!-- Cycle through the todolist -->
+<template name="todos">
 
-<!-- List the open tasks -->
+	{{#if tasks.count != undefined}}
+
+			<!--  Inbox title -->
+			<div class="row">
+					<div class="small-12 large-12 columns">
+						<p data-magellan-destination="todos">
+							<strong>Inbox</strong> &nbsp;&nbsp;&nbsp;	<span class="label round radius">{{tasks.count}}</span>
+							<a name="todos"></a>
+						</p>
+					</div>
+			</div>
+
+			<!--  Todo items -->
+			{{#each tasks}}
+					<div class="row">
+							<div class="small-12 columns">
+								{{> task}}
+							</div>
+					</div>
+
+			{{/each}}
+			<!-- a spacer row -->
+			<div class="row">
+					<div class="small-12 columns">
+							<p>&nbsp;</p>
+					</div>
+			</div>
+
+	{{else}}
+			<!-- Nothing to show yet -->
+			<div class="row">
+					<div class="small-12 columns">
+							<p>Nothing to show yet. Get started by entering a few items you like to get done!</p>
+					</div>
+			</div>
+
+	{{/if}} <!-- end: If ther is nothing to show -->
+
+</template>
+
+<!--  Open todo items -->
 <template name="task">
 
-	<div class="getFocus">
+	<a data-reveal-id="{{_id}}">{{#markdown}}{{text}}{{/markdown}}</a>
 
-		{{text}}
+	<div id="{{_id}}" class="reveal-modal xlarge" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
 
-		<p class="btns" style="display: none;">
-			<button type="button" class="btn btn-default btn-xs btnDone">Worked on it</button>
-			<button type="button" class="btn btn-warning btn-xs btnDismiss">Dismiss</button>
-			<button type="button" class="btn btn-danger btn-xs btnClose">Mark Completed</button>
-		</p>
+	  	<p class="lead">{{#markdown}}{{text}}{{/markdown}}</p>
 
+			<!-- Radius Button Group -->
+			{{> activeTodoActionButtons}}
+
+	  	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	</div>
-
+	<script>
+		$(document).foundation('reveal', 'reflow');
+	</script>
 </template><!-- End: List the open tasks -->
 
-<!-- List the Closed & dismissed tasks -->
+<template name="activeTodoActionButtons">
+	<!-- Radius Button Group -->
+	<ul class="button-group radius text-center btns">
+		<li><button type="button" class="button tiny btnDone">Worked on</button></li>
+		<li><button type="button" class="button tiny secondary btnDismiss">Dismiss</button></li>
+		<li><button type="button" class="button tiny alert btnClose">Completed</button></li>
+	</ul>
+
+	<script>
+		// $(document).foundation('reveal', 'reflow');
+	</script>
+</template>
+
+
+<!-- Cycle through the todolist -->
 <template name="closedTask">
 
-	<div class="col-md-12 {{isDismissed standing}}">
-		<button type="button" class="btn btn-danger btn-sm btnDelete">
-		  <span class="glyphicon glyphicon glyphicon-remove" aria-hidden="true"></span>
-		</button>&nbsp;
-		<button type="button" class="btn btn-default btn-sm btnRevive">
-		  <span class="glyphicon glyphicon glyphicon-repeat" aria-hidden="true"></span>
-		</button>
-		&nbsp;&nbsp;&nbsp;
-		<del><span>{{formatDate deletedAt "short"}}</span> -- <span class="text">{{text}}</span></del>
-	</div>
+	{{#if closedTasks.count != undefined}}
 
-</template><!-- End: List the open tasks -->
+			<!--  Inbox title -->
+			<div class="row">
+					<div class="small-12 large-12 columns">
+						<p data-magellan-destination="done-dismissed">
+							<strong>Closed/Dismissed</strong> &nbsp;&nbsp;&nbsp;	<span class="label round radius">{{closedTasks.count}}</span>
+							<a name="done-dismissed"></a>
+						</p>
+					</div>
+			</div>
+
+			<!--  Todo items -->
+			{{#each closedTasks}}
+					<div class="row">
+							<div class="small-12 columns">
+
+								<ul class="button-group radius left">
+								  <li><a href="#" class="button tiny btnRevive">Re-open</a></li>
+								  <li><a href="#" class="button tiny alert btnDelete">Delete</a></li>
+								</ul>
+								<p class="closed">&nbsp;&nbsp;&nbsp;<strike class="{{isDismissed standing}}">{{text}}</strike></p>
+
+						</div>
+					</div>
+			{{/each}}
+			<!-- a spacer row -->
+			<div class="row">
+					<div class="small-12 columns">
+							<p>&nbsp;</p>
+					</div>
+			</div>
+
+	{{else}}
+			<!-- Nothing to show yet -->
+			<div class="row">
+					<div class="small-12 columns">
+							<p>Nothing to show yet. Get started by entering a few items you like to get done!</p>
+					</div>
+			</div>
+
+  {{/if}} 	<!-- end: If ther is nothing to show -->
+
+</template>
