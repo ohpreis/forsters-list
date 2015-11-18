@@ -5,24 +5,27 @@ if (Meteor.isServer) {
     Meteor.publish("tasks", function(argument){
        return Tasks.find();
     });
-    Meteor.publish("closedTasks", function(argument){
-       return Tasks.find();
-    });
+    // Meteor.publish("closedTasks", function(argument){
+    //    return Tasks.find();
+    // });
 }
 
 if (Meteor.isClient) {
 
   Meteor.subscribe("tasks");
-  Meteor.subscribe("closedTasks");
+  // Meteor.subscribe("closedTasks");
 
   // This code only runs on the client
-	Template.body.helpers({
+	Template.todos.helpers({
 		tasks: function() {
 			return Tasks.find({
 				standing: "open"
 			});
-		},
-		closedTasks: function() {
+		}
+	});
+
+  Template.closedTask.helpers({
+    closedTasks: function() {
 
 			if (Session.get("sortCompleted")) {
 				// return Tasks.find({standing: "closed"});
@@ -47,7 +50,7 @@ if (Meteor.isClient) {
 		sortCompleted: function() {
 			return Session.get("sortCompleted");
 		}
-	});
+  });
 
 	var DateFormats = {
 		short: "DD MMMM - YYYY",
@@ -68,16 +71,15 @@ if (Meteor.isClient) {
 
 	UI.registerHelper("isDismissed", function(standing) {
 		if (standing == "dismissed") {
-			return "bg-warning";
+			return "bg-dismissed";
 		} else {
-			return "";
+			return "bg-closed";
 		}
 	});
 
+
 	Template.body.events({
-    "change .sort-it input": function(event) {
-      Session.set("sortCompleted", event.target.checked);
-    },
+
 		"submit .new-task": function(event) {
 
 			// prevent default browser form submit
@@ -94,51 +96,49 @@ if (Meteor.isClient) {
 		}
 	});
 
+  // Template.body.onRendered = function() {
+  //
+  //   $(document).foundation("reveal", "reflow");
+  //
+  //   $(window).bind("load", function () {
+  //     var footer = $("#footer");
+  //     var pos = footer.position();
+  //     var height = $(window).height();
+  //     height = height - pos.top;
+  //     height = height - footer.height();
+  //     if (height > 0) {
+  //       footer.css({
+  //           'margin-top': height + 'px'
+  //       });
+  //     }
+  //   });
+  //
+  // }
 
 	Template.task.events({
 
-		"click .btnDone": function() {
-			Meteor.call("completeTask", this._id);
-		},
+	});
+
+  Template.activeTodoActionButtons.events({
+    "click .btnDone": function() {
+    	Meteor.call("completeTask", this._id);
+      $('#' + this._id).foundation('reveal', 'close');
+    },
 		"click .btnClose": function() {
 			Meteor.call("closeTask", this._id);
+      $('#' + this._id).foundation('reveal', 'close');
 		},
 		"click .btnDismiss": function() {
 			Meteor.call("dismissTask", this._id)
-		},
-	  "click .getFocus": function(e) {
-
-		  var target = $(e.target);
-		  if ( target.is("a") ) {
-			  target.click();
-			  return false;
-		  }
-
-
-		  $(".getFocus").removeClass("doubleFocus").children().hide();
-
-		  if ($(e.target).hasClass("doubleFocus")) {
-			  $(e.target).children().toggle() ;
-			  $(e.target).removeClass("doubleFocus");
-		  }
-		  else
-		  {
-			  $(e.target).children().toggle() ;
-			  $(e.target).addClass("doubleFocus");
-			  $(e.target).linkify({target: "_blank"});
-		  }
-
-		  return false;
-	  },
-	  "click .doubleFocus": function(e) {
-		  $(e.target).removeClass("doubleFocus").children().hide();
-	  }
-
-	});
+      $('#' + this._id).foundation('reveal', 'close');
+		}
+  });
 
 	Template.closedTask.events({
-
-		"click .btnRevive": function() {
+    "change .sort-it input": function(event) {
+      Session.set("sortCompleted", event.target.checked);
+    },
+    "click .btnRevive": function() {
 			Meteor.call("reviveTask", this._id);
 
 		},
@@ -151,6 +151,11 @@ if (Meteor.isClient) {
 	Accounts.ui.config({
 		passwordSignupFields: "USERNAME_ONLY"
 	});
+
+  Template.body.rendered = function () {
+    $(document).foundation('reflow');
+  }
+
 } // End of is client
 
 Meteor.methods({
@@ -169,6 +174,7 @@ Meteor.methods({
       owner: Meteor.userId(),
       username: Meteor.user().username
     });
+    // $(document).foundation('reveal', 'reflow');
   },
   completeTask: function(taskID) {
     if (!Meteor.userId()) {
