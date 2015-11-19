@@ -5,24 +5,58 @@
 
 <body>
 
-	<!-- Title and Login Button -->
-	<div class="row">
-		<div class="small-6 large-6 columns">
-			<h3>Forster's List</h3>
-		</div>
-		<div class="small-6 large-6  columns">
-			<div id="loginBtn">{{> loginButtons}}</div>
-		</div>
-	</div>
+<div class="sticky">
+	<nav class="top-bar" data-topbar role="navigation">
+			<ul class="title-area">
+				<li class="name">
+					<h1><a href="#">FL</a></h1>
+				</li>
+				<li class="has-form">
+					<form class="new-task">
+						<div class="row collapse">
+							<div class="large-8 small-9 columns">
+								<input type="text" name="text" placeholder="New todo">
+							</div>
+							<div class="large-4 small-3 columns">
+								<input type="submit" class="alert button expand" value="Go" />
+							</div>
+						</div>
+					</form>
+				</li>
+ 				<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+				<li class="toggle-topbar menu-icon"><a href="#"><span>M</span></a></li>
+			</ul>
 
-	<!-- Subtitle and spacer -->
-	<div class="row">
-		<div class="small-12">
-			<div class="magellan-container" data-magellan-expedition="fixed">
-				<dl class="sub-nav">
-					<dd data-magellan-arrival="todos"><a href="#todos">Todos</a></dd>
-					<dd data-magellan-arrival="done-dismissed"><a href="#done-dismissed">Done/Dismissed</a></dd>
-				</dl>
+			<section class="top-bar-section">
+				<!-- Right Nav Section -->
+				<ul class="right">
+					<li class="large-only"><a href="">Test</a></li>
+					<li class="has-dropdown">
+						<a href="#">Dropdown</a>
+						<ul class="dropdown">
+							<li><a href="#">link</a></li>
+							<li><a href="#">link</a></li>
+						</ul>
+					</li>
+				</ul>
+
+				<!-- Left Nav Section -->
+				<ul class="left">
+
+				</ul>
+			</section>
+		</nav>
+</div>
+
+
+
+		<div style="background-color: #eee; padding: 4px 0;">
+		<div class="row">
+			<div class="large-8 small-8 columns">
+					Forster's List
+			</div>
+			<div class="large-4 small-4 columns">
+				{{> loginButtons align="right"}}
 			</div>
 		</div>
 	</div>
@@ -39,23 +73,6 @@
 	{{/if}} <!-- end: currentUser -->
 
 
-		<!-- Input new Todos -->
-		<div id="footer">
-		<form class="new-task">
-
-						<div class="row collapse">
-
-							<div class="small-10 columns">
-								<input type="text" name="text" placeholder="I want to..." />
-							</div>
-							<div class="small-2 columns">
-								<input type="submit" class="button postfix" value="Go" />
-							</div>
-
-						</div>
-		</form>
-	</div>
-
 	<br /><br /><br />
 </body>
 
@@ -67,22 +84,22 @@
 			<!--  Inbox title -->
 			<div class="row">
 					<div class="small-12 large-12 columns">
-						<p data-magellan-destination="todos">
-							<strong>Inbox</strong> &nbsp;&nbsp;&nbsp;	<span class="label round radius">{{tasks.count}}</span>
-							<a name="todos"></a>
-						</p>
+							<h4><span class="label">{{tasks.count}}</span> Inbox</h4>
 					</div>
 			</div>
 
-			<!--  Todo items -->
-			{{#each tasks}}
-					<div class="row">
-							<div class="small-12 columns">
-								{{> task}}
-							</div>
-					</div>
+			<div class="row">
+				<div class="large-12 columns">
 
-			{{/each}}
+					<!--  Todo items -->
+					{{#each tasks}}
+							{{> task}}
+					{{/each}}
+
+				</div>
+			</div>
+
+
 			<!-- a spacer row -->
 			<div class="row">
 					<div class="small-12 columns">
@@ -105,11 +122,11 @@
 <!--  Open todo items -->
 <template name="task">
 
-	<a data-reveal-id="{{_id}}">{{#markdown}}{{text}}{{/markdown}}</a>
+	{{#markdown}}<h4><a href="#" data-reveal-id="{{_id}}">{{text}}</a></h4>{{/markdown}}
 
-	<div id="{{_id}}" class="reveal-modal xlarge" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+	<div id="{{_id}}" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
 
-	  	<p class="lead">{{#markdown}}{{text}}{{/markdown}}</p>
+			{{#markdown}}<h2 id="modalTitle">This is a todo that need to be done</h2>{{/markdown}}
 
 			<!-- Radius Button Group -->
 			{{> activeTodoActionButtons}}
@@ -122,11 +139,13 @@
 </template><!-- End: List the open tasks -->
 
 <template name="activeTodoActionButtons">
+
+	<br />
 	<!-- Radius Button Group -->
 	<ul class="button-group radius text-center btns">
-		<li><button type="button" class="button tiny btnDone">Worked on</button></li>
-		<li><button type="button" class="button tiny secondary btnDismiss">Dismiss</button></li>
-		<li><button type="button" class="button tiny alert btnClose">Completed</button></li>
+		<li><button type="button" class="small button success radius btnDone">Done</button></li>
+		<li><button type="button" class="small button primary btnDismiss">Dismiss</button></li>
+		<li><button type="button" class="small button alert radius btnClose">Completed</button></li>
 	</ul>
 
 	<script>
@@ -156,8 +175,8 @@
 							<div class="small-12 columns">
 
 								<ul class="button-group radius left">
-								  <li><a href="#" class="button tiny btnRevive">Re-open</a></li>
-								  <li><a href="#" class="button tiny alert btnDelete">Delete</a></li>
+								  <li><a href="#" class="button tiny btnRevive">&#x23;</a></li>
+								  <li><a href="#" class="button tiny alert btnDelete">&#x78;</a></li>
 								</ul>
 								<p class="closed">&nbsp;&nbsp;&nbsp;<strike class="{{isDismissed standing}}">{{text}}</strike></p>
 
