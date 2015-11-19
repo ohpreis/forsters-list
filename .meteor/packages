@@ -20,5 +20,5 @@ momentjs:moment
 ls3271:meteor-linkify
 accounts-ui
 accounts-password
-ewall:foundation
 markdown
+matthew:foundation5-sass
