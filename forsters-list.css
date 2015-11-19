@@ -5,34 +5,31 @@ html, body {
 
 }
 
-#loginBtn {
-	margin-top: 8px;
-}
+.has-form {
+  position: absolute;
+  top: 0;
+  left: 3rem;
+  min-width: 28rem; }
+  @media only screen and (max-width: 40em) {
+    .has-form {
+      min-width: 17rem;
+      top: 0.5rem; }
+      .has-form .button {
+        height: 1.85rem; } }
+
+
+
+
+
+
 .blurredstuff {
 	-webkit-filter: blur(1px);
 	opacity: .5;
 }
 
-.closed {
-	padding-top: 4px;
-}
 .bg-dismissed {
-	color: #F0E8DD;
+	color: orange;
 }
 .bg-closed {
 	color: #666;
-}
-.magellan-container {
-	background-color: #ccc;
-}
-#footer {
-
-	position: fixed;
-	bottom: 0;
-	width: 100%;
-	background-color: black;
-}
-
-form {
-	margin-top: 1rem;
 }
