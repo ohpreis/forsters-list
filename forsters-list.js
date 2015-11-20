@@ -152,8 +152,8 @@ if (Meteor.isClient) {
 		passwordSignupFields: "USERNAME_ONLY"
 	});
 
-  Template.body.rendered = function () {
-    $(document).foundation('reflow');
+  Template.body.onRendered = function () {
+    $('head').append( '<meta name="viewport" content="width=device-width, initial-scale=1">' );
   }
 
 } // End of is client
