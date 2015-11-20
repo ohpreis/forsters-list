@@ -127,7 +127,7 @@
 
 	{{#markdown}}<h4><a href="#" data-reveal-id="{{_id}}">{{text}}</a></h4>{{/markdown}}
 
-	<div id="{{_id}}" class="reveal-modal" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog">
+	<div id="{{_id}}" class="reveal-modal" data-reveal aria-labelledby="{{_id}}" aria-hidden="true" role="dialog">
 
 			{{#markdown}}<h2 id="modalTitle">{{text}}</h2>{{/markdown}}
 
@@ -137,6 +137,7 @@
 	  	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
 	</div>
 	<script>
+		$(document).foundation();
 		$(document).foundation('reveal', 'reflow');
 	</script>
 </template><!-- End: List the open tasks -->
@@ -144,7 +145,6 @@
 <template name="activeTodoActionButtons">
 
 	<br />
-	<!-- Radius Button Group -->
 	<ul class="button-group radius text-center btns">
 		<li><button type="button" class="small button success radius btnDone">Done</button></li>
 		<li><button type="button" class="small button primary btnDismiss">Dismiss</button></li>
