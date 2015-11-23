@@ -2,24 +2,8 @@
 
 
 html, body {
-
+  margin-top: 28px;
 }
-
-.has-form {
-  position: absolute;
-  top: 0;
-  left: 3rem;
-  min-width: 28rem; }
-  @media only screen and (max-width: 40em) {
-    .has-form {
-      min-width: 17rem;
-      top: 0.5rem; }
-      .has-form .button {
-        height: 1.85rem; } }
-
-
-
-
 
 
 .blurredstuff {

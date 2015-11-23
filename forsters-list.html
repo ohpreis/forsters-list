@@ -5,75 +5,56 @@
 
 <body>
 
-<div class="sticky">
-	<nav class="top-bar" data-topbar role="navigation">
-			<ul class="title-area">
-				<li class="name">
-					<h1><a href="#">FL</a></h1>
-				</li>
-				<li class="has-form">
-					<form class="new-task">
-						<div class="row collapse">
-							<div class="large-8 small-9 columns">
-								<input type="text" name="text" placeholder="New todo">
-							</div>
-							<div class="large-4 small-3 columns">
-								<input type="submit" class="alert button expand" value="Go" />
-							</div>
-						</div>
-					</form>
-				</li>
- 				<!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-				<li class="toggle-topbar menu-icon"><a href="#"><span>M</span></a></li>
-			</ul>
-
-			<section class="top-bar-section">
-				<!-- Right Nav Section -->
-				<ul class="right">
-					<li class="large-only"><a href="">Test</a></li>
-					<li class="has-dropdown">
-						<a href="#">Dropdown</a>
-						<ul class="dropdown">
-							<li><a href="#">link</a></li>
-							<li><a href="#">link</a></li>
-						</ul>
-					</li>
-				</ul>
-
-				<!-- Left Nav Section -->
-				<ul class="left">
-
-				</ul>
-			</section>
-		</nav>
-</div>
-
-
-
-		<div style="background-color: #eee; padding: 4px 0;">
+	<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
 		<div class="row">
-			<div class="large-8 small-8 columns">
-					Forster's List
+			<form class="form-inline new-task" role="search">
+				<div class="col-xs-2">
+					<p style="margin-top: 8px; font-weight:bold; line-height: 2em;">FL</p>
+				</div>
+			<div class="col-xs-8">
+
+	        <div class="form-group col-xs-12" style="margin-top: 6px;">
+	          <input style="width: 100%;" type="text" name="text" class="form-control" placeholder="New todo">
+	        </div>
 			</div>
-			<div class="large-4 small-4 columns">
-				{{> loginButtons align="right"}}
+			<div class="col-xs-2">
+				<p style="margin-top: 6px;"><button type="submit" class="btn btn-primary">Go</button></p>
 			</div>
+			</form>
 		</div>
 	</div>
-
-	{{#if currentUser}}
-
-
-			{{> todos}}
+	</nav>
 
 
-			{{> closedTask}}
+
+	<div class="container">
 
 
-	{{/if}} <!-- end: currentUser -->
+		<div class="row">
+
+				<ol class="breadcrumb">
+					<li>Forster's List</li>
+					<li>{{> loginButtons align="left"}}</li>
+				</ol>
+
+		</div>
 
 
-	<br /><br /><br />
+		{{#if currentUser}}
+
+
+				{{> todos}}
+
+
+				{{> closedTodos}}
+
+
+		{{/if}} <!-- end: currentUser -->
+
+	</div>
+
+
 
 </body>
 
@@ -84,20 +65,17 @@
 
 	{{#if tasks.count != undefined}}
 
-			<!--  Inbox title -->
 			<div class="row">
-					<div class="small-12 large-12 columns">
-							<h4><span class="label">{{tasks.count}}</span> Inbox</h4>
-					</div>
-			</div>
-
-			<div class="row">
-				<div class="large-12 columns">
-
-					<!--  Todo items -->
-					{{#each tasks}}
-							{{> task}}
-					{{/each}}
+				<div class="col-xs-12">
+					<table class="table">
+						<caption>Inbox <span class="badge pull-right">{{tasks.count}}</span></caption>
+						<tbody>
+							<!--  Todo items -->
+							{{#each tasks}}
+									{{> task}}
+							{{/each}}
+						</tbody>
+					</table>
 
 				</div>
 			</div>
@@ -105,7 +83,7 @@
 
 			<!-- a spacer row -->
 			<div class="row">
-					<div class="small-12 columns">
+					<div class="col-xs-12">
 							<p>&nbsp;</p>
 					</div>
 			</div>
@@ -113,94 +91,109 @@
 	{{else}}
 			<!-- Nothing to show yet -->
 			<div class="row">
-					<div class="small-12 columns">
-							<p>Nothing to show yet. Get started by entering a few items you like to get done!</p>
+					<div class="col-xs-12">
+							<p>asdfNothing to show yet. Get started by entering a few items you like to get done!</p>
 					</div>
 			</div>
 
 	{{/if}} <!-- end: If ther is nothing to show -->
-
+	<script>
+		$('.lead').linkify({
+			target: "_blank"
+		});
+	</script>
 </template>
 
 <!--  Open todo items -->
 <template name="task">
 
-	{{#markdown}}<h4><a href="#" data-reveal-id="{{_id}}">{{text}}</a></h4>{{/markdown}}
+		<tr><td>
+		{{#markdown}}<h4><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></h4>{{/markdown}}
 
-	<div id="{{_id}}" class="reveal-modal" data-reveal aria-labelledby="{{_id}}" aria-hidden="true" role="dialog">
+		<!-- Modal -->
+		<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title" id="myModalLabel">FL</h4>
+					</div>
+					<div class="modal-body">
+						{{#markdown}}<p class="lead">{{text}}</p>{{/markdown}}
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success btnDone" data-dismiss="modal">Worked on</button>
+						<button type="button" class="btn btn-warning btnDismiss" data-dismiss="modal">Dismiss</button>
+						<button type="button" class="btn btn-primary btnClose" data-dismiss="modal">Done!</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">&times;</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</td></tr>
 
-			{{#markdown}}<h2 id="modalTitle">{{text}}</h2>{{/markdown}}
-
-			<!-- Radius Button Group -->
-			{{> activeTodoActionButtons}}
-
-	  	<a class="close-reveal-modal" aria-label="Close">&#215;</a>
-	</div>
-	<script>
-		$(document).foundation();
-		$(document).foundation('reveal', 'reflow');
-	</script>
 </template><!-- End: List the open tasks -->
 
-<template name="activeTodoActionButtons">
+<template name="closedTodos">
 
-	<br />
-	<ul class="button-group radius text-center btns">
-		<li><button type="button" class="small button success radius btnDone">Done</button></li>
-		<li><button type="button" class="small button primary btnDismiss">Dismiss</button></li>
-		<li><button type="button" class="small button alert radius btnClose">Completed</button></li>
-	</ul>
+		{{#if closedTasks.count != undefined}}
+				<div class="row">
+					<div class="col-xs-12">
+						<table class="table">
+							<caption>Inbox <span class="badge pull-right">{{closedTasks.count}}</span></caption>
+							<tbody>
+								<!--  Todo items -->
+								{{#each closedTasks}}
+										{{> closedTask}}
+								{{/each}}
+							</tbody>
+						</table>
 
-	<script>
-		// $(document).foundation('reveal', 'reflow');
-	</script>
+					</div>
+				</div>
+		{{else}}
+				<!-- Nothing to show yet -->
+				<div class="row">
+						<div class="col-xs-12">
+								<p>The deleted/dismissed section is empty.</p>
+						</div>
+				</div>
+
+		{{/if}} <!-- end: If ther is nothing to show -->
+
+		<script>
+			$('.lead').linkify({
+				target: "_blank"
+			});
+		</script>
 </template>
-
 
 <!-- Cycle through the todolist -->
 <template name="closedTask">
 
-	{{#if closedTasks.count != undefined}}
+			<tr><td>
+			{{#markdown}}<h4><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></h4>{{/markdown}}
 
-			<!--  Inbox title -->
-			<div class="row">
-					<div class="small-12 large-12 columns">
-						<p data-magellan-destination="done-dismissed">
-							<strong>Closed/Dismissed</strong> &nbsp;&nbsp;&nbsp;	<span class="label round radius">{{closedTasks.count}}</span>
-							<a name="done-dismissed"></a>
-						</p>
-					</div>
-			</div>
-
-			<!--  Todo items -->
-			{{#each closedTasks}}
-					<div class="row">
-							<div class="small-12 columns">
-
-								<ul class="button-group radius left">
-								  <li><a href="#" class="button tiny btnRevive">&#x23;</a></li>
-								  <li><a href="#" class="button tiny alert btnDelete">&#x78;</a></li>
-								</ul>
-								<p class="closed">&nbsp;&nbsp;&nbsp;<strike class="{{isDismissed standing}}">{{text}}</strike></p>
-
+			<!-- Modal -->
+			<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							<h4 class="modal-title" id="myModalLabel">FL</h4>
+						</div>
+						<div class="modal-body">
+							<p class="lead">{{text}}</p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger btnDelete" data-dismiss="modal">Delete</button>
+							<button type="button" class="btn btn-primary btnRevive">Revive</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">&times;</button>
 						</div>
 					</div>
-			{{/each}}
-			<!-- a spacer row -->
-			<div class="row">
-					<div class="small-12 columns">
-							<p>&nbsp;</p>
-					</div>
+				</div>
 			</div>
+		</td></tr>
 
-	{{else}}
-			<!-- Nothing to show yet -->
-			<div class="row">
-					<div class="small-12 columns">
-							<p>Nothing to show yet. Get started by entering a few items you like to get done!</p>
-					</div>
-			</div>
-
-  {{/if}} 	<!-- end: If ther is nothing to show -->
 
 </template>

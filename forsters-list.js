@@ -24,7 +24,7 @@ if (Meteor.isClient) {
 		}
 	});
 
-  Template.closedTask.helpers({
+  Template.closedTodos.helpers({
     closedTasks: function() {
 
 			if (Session.get("sortCompleted")) {
@@ -77,7 +77,6 @@ if (Meteor.isClient) {
 		}
 	});
 
-
 	Template.body.events({
 
 		"submit .new-task": function(event) {
@@ -96,41 +95,28 @@ if (Meteor.isClient) {
 		}
 	});
 
-  // Template.body.onRendered = function() {
-  //
-  //   $(document).foundation("reveal", "reflow");
-  //
-  //   $(window).bind("load", function () {
-  //     var footer = $("#footer");
-  //     var pos = footer.position();
-  //     var height = $(window).height();
-  //     height = height - pos.top;
-  //     height = height - footer.height();
-  //     if (height > 0) {
-  //       footer.css({
-  //           'margin-top': height + 'px'
-  //       });
-  //     }
-  //   });
-  //
-  // }
-
 	Template.task.events({
 
 	});
 
-  Template.activeTodoActionButtons.events({
-    "click .btnDone": function() {
+  Template.task.events({
+    "click .btnDone": function(e) {
     	Meteor.call("completeTask", this._id);
-      $('#' + this._id).foundation('reveal', 'close');
+      $("#" + this._id).modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
     },
 		"click .btnClose": function() {
 			Meteor.call("closeTask", this._id);
-      $('#' + this._id).foundation('reveal', 'close');
+      $("#" + this._id).modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
 		},
 		"click .btnDismiss": function() {
 			Meteor.call("dismissTask", this._id)
-      $('#' + this._id).foundation('reveal', 'close');
+      $("#" + this._id).modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
 		}
   });
 
@@ -140,10 +126,16 @@ if (Meteor.isClient) {
     },
     "click .btnRevive": function() {
 			Meteor.call("reviveTask", this._id);
+      $("#" + this._id).modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
 
 		},
 		"click .btnDelete": function() {
 			Meteor.call("deleteTask", this._id);
+      $("#" + this._id).modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
 		}
 
 	});
