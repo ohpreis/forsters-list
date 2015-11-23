@@ -91,7 +91,6 @@
 							<p>Start by adding a few todos.</p>
 					</div>
 			</div>
-
 	{{/if}} <!-- end: If ther is nothing to show -->
 
 </template>
@@ -100,7 +99,9 @@
 <template name="task">
 
 		<tr><td>
-		<h4><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></h4>
+		<h4>
+			<a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a>
+		</h4>
 
 		<!-- Modal -->
 		<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -112,6 +113,7 @@
 					</div>
 					<div class="modal-body">
 						<p class="lead">{{#markdown}}{{text}}{{/markdown}}</p>
+						<p>Worked on: <span class="label label-primary pulls-right">{{touched}}</span></p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success btnDone" data-dismiss="modal">Worked on</button>
