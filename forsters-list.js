@@ -162,6 +162,7 @@ Meteor.methods({
       standing: "open",
       createdAt: new Date(),
       deletedAt: "",
+      touched: 0,
       owner: Meteor.userId(),
       username: Meteor.user().username
     });
@@ -178,6 +179,7 @@ Meteor.methods({
       standing: "open",
       createdAt: new Date(),
       deletedAt: "",
+      touched: task.touched + 1, 
       owner: Meteor.userId(),
       username: Meteor.user().username
     });
