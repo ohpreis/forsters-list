@@ -1,19 +1,14 @@
 Tasks = new Mongo.Collection("tasks");
 
 if (Meteor.isServer) {
-
     Meteor.publish("tasks", function(argument){
        return Tasks.find();
     });
-    // Meteor.publish("closedTasks", function(argument){
-    //    return Tasks.find();
-    // });
 }
 
 if (Meteor.isClient) {
 
   Meteor.subscribe("tasks");
-  // Meteor.subscribe("closedTasks");
 
   // This code only runs on the client
 	Template.todos.helpers({
@@ -28,14 +23,12 @@ if (Meteor.isClient) {
     closedTasks: function() {
 
 			if (Session.get("sortCompleted")) {
-				// return Tasks.find({standing: "closed"});
 				return Tasks.find({
 					standing: {
 						$in: ["closed", "dismissed"]
 					}
 				});
 			} else {
-				// return Tasks.find({ standing: "closed"}, {sort: {deletedAt: -1}});
 				return Tasks.find({
 					standing: {
 						$in: ["closed", "dismissed"]
@@ -52,12 +45,12 @@ if (Meteor.isClient) {
 		}
   });
 
+  // Date format Mask
 	var DateFormats = {
 		short: "DD MMMM - YYYY",
 		long: "dddd DD.MM.YYYY HH:mm"
 	};
 
-	// Use UI.registerHelper...
 	// Format the date
 	UI.registerHelper("formatDate", function(deletedAt, format) {
 		if (moment) {
@@ -69,9 +62,10 @@ if (Meteor.isClient) {
 		}
 	});
 
+  // Helper to highlight dismissed items.
 	UI.registerHelper("isDismissed", function(standing) {
 		if (standing == "dismissed") {
-			return "bg-dismissed";
+			return "bg-warning";
 		} else {
 			return "bg-closed";
 		}
@@ -86,6 +80,11 @@ if (Meteor.isClient) {
 
 			// get the value from the form element
 			var text = event.target.text.value;
+
+      if (text.length <= 5) {
+        alert("There ought to be some text, no?");
+        return false;
+      }
 
 			// Insert a task into the collection
 			Meteor.call("addTask", text);
