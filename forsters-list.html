@@ -1,6 +1,5 @@
 <head>
 	<title>Forster's List</title>
-
 </head>
 
 <body>
@@ -26,10 +25,7 @@
 	</div>
 	</nav>
 
-
-
 	<div class="container">
-
 
 		<div class="row">
 
@@ -92,23 +88,19 @@
 			<!-- Nothing to show yet -->
 			<div class="row">
 					<div class="col-xs-12">
-							<p>asdfNothing to show yet. Get started by entering a few items you like to get done!</p>
+							<p>Start by adding a few todos.</p>
 					</div>
 			</div>
 
 	{{/if}} <!-- end: If ther is nothing to show -->
-	<script>
-		$('.lead').linkify({
-			target: "_blank"
-		});
-	</script>
+
 </template>
 
 <!--  Open todo items -->
 <template name="task">
 
 		<tr><td>
-		{{#markdown}}<h4><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></h4>{{/markdown}}
+		<h4><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></h4>
 
 		<!-- Modal -->
 		<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -119,7 +111,7 @@
 						<h4 class="modal-title" id="myModalLabel">FL</h4>
 					</div>
 					<div class="modal-body">
-						{{#markdown}}<p class="lead">{{text}}</p>{{/markdown}}
+						<p class="lead">{{#markdown}}{{text}}{{/markdown}}</p>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-success btnDone" data-dismiss="modal">Worked on</button>
@@ -140,7 +132,7 @@
 				<div class="row">
 					<div class="col-xs-12">
 						<table class="table">
-							<caption>Inbox <span class="badge pull-right">{{closedTasks.count}}</span></caption>
+							<caption>Completed/Dismissed <span class="badge pull-right">{{closedTasks.count}}</span></caption>
 							<tbody>
 								<!--  Todo items -->
 								{{#each closedTasks}}
@@ -161,18 +153,13 @@
 
 		{{/if}} <!-- end: If ther is nothing to show -->
 
-		<script>
-			$('.lead').linkify({
-				target: "_blank"
-			});
-		</script>
 </template>
 
 <!-- Cycle through the todolist -->
 <template name="closedTask">
 
-			<tr><td>
-			{{#markdown}}<h4><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></h4>{{/markdown}}
+			<tr class="{{isDismissed standing}}"><td>
+			{{#markdown}}<h5><s><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></s></h5>{{/markdown}}
 
 			<!-- Modal -->
 			<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

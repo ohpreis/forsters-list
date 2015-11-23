@@ -6,26 +6,42 @@ You can read all about David Forster's way of doing To Dos on his website. http:
 
 ---
 
+## Installaling the App
+Forster's List is build using the awesome Meteorjs framework. So first install
+Meteor on your computer. (http://meteor.com).
+
+Download and extract the zip file.
+Open a terminal window, change into the forsters-list-master directory and run meteor.
+
+    meteor run
+
+Open you browser [http://localhost:3000]
+
+You need to create a login first. Click the "Sign in" link to create your account.
+Once you have logged in you are ready to get started.
+
+
 ### Intro to Forster's List
-* Foster's list is implemented in this application as one long list of todos.
+* Foster's list is implemented as one long list of todos.
 * One input field for you to add new todos.
 * A list of completed or dismissed items.
-* An option to move items into an idea bucket. More about that later.
 
 **Getting started**
 
-You start by adding your todos to the list of items to get done.
+You start by adding your todos to get done.
 
-> **Caution**: Only enter "to do" items, not **events**. Events have a date/time for when this is happening. All your events should be added to a calendar, preferably with a reminder set so you don't miss them. Tasks on the other hand are items you want to do or work on, and that don't have to be done on a precise date or time. Like picking up around the house, implement feature b, call auntie to catch up etc.
+> **A word of caution**: Only enter "to do" items and not **events**. Events have a date/time for when it is happening. Events should be added to a calendar app, preferably with a reminder set so you don't miss them.
 
 
 **Here is the basic work through.**
 Once you added your todos.
 
 * Read through your list of open items without taking action.
-* Have a second, slower read through your list until one item stands out.  Click on it to focus in.
+* Have a second, slower read through your list until one item stands out.  Click on the item to focus in.
 * Work on that item for as long as you like.
-  * If you have not finished the todo yet, click "Worked on it" and it will be re-entered at the bottom of the list.
-  * If you finished it click "Mark as Completed"
+  * If you did not finish the todo, mark it as "Worked on" and it will be re-entered at the bottom of the list.
+  * If you finished the todo click "Done!" - Congratulations!
 * Rinse and repeat this process.
-* If you run over an item that just does not want to get done. Don't keep it in the list,  but mark it as dismissed or move it to the ideas section.
+* If you run over an item that just does not want to get done. Don't keep it in the list,  but mark it as "Dismissed" or move it to the ideas section.
+
+I recommend reading through [David Forster's](http://markforster.squarespace.com/autofocus-system/) instructions before getting started.

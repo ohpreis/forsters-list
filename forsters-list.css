@@ -5,6 +5,7 @@ html, body {
   margin-top: 28px;
 }
 
+table caption { font-weight: bold }
 
 .blurredstuff {
 	-webkit-filter: blur(1px);
