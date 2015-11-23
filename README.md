@@ -30,7 +30,7 @@ Once you have logged in you are ready to get started.
 
 You start by adding your todos to get done.
 
-> **A word of caution**: Only enter "to do" items and not **events**. Events have a date/time for when it is happening. Events should be added to a calendar app, preferably with a reminder set so you don't miss them.
+> **A word of caution**: Only add "to do" items and not **events**. Events have a date/time for when it is happening. Events should be added to a calendar app, preferably with a reminder set so you don't miss them.
 
 
 **Here is the basic work through.**

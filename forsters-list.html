@@ -9,7 +9,7 @@
 		<div class="row">
 			<form class="form-inline new-task" role="search">
 				<div class="col-xs-2">
-					<p style="margin-top: 8px; font-weight:bold; line-height: 2em;">FL</p>
+					<p style="margin-top: 8px; font-weight:bold; line-height: 2em;" title="Forster's List">FL</p>
 				</div>
 			<div class="col-xs-8">
 
@@ -32,6 +32,11 @@
 				<ol class="breadcrumb">
 					<li>Forster's List</li>
 					<li>{{> loginButtons align="left"}}</li>
+					{{#if currentUser}}
+
+					{{else}}
+						<li><span class="label label-warning">Please login!</span></li>
+					{{/if}}
 				</ol>
 
 		</div>
@@ -44,7 +49,6 @@
 
 
 				{{> closedTodos}}
-
 
 		{{/if}} <!-- end: currentUser -->
 
