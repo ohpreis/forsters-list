@@ -14,11 +14,33 @@ if (Meteor.isClient) {
 	Template.todos.helpers({
 		tasks: function() {
 			return Tasks.find({
-				standing: "open"
+				standing: "open", type: "todo"
 			});
 		}
 	});
 
+  Template.todoCount.helpers ({
+    theCount: function() {
+      return Tasks.find({standing: "open", type: "todo"}).count();
+    }
+  });
+  Template.ideaCount.helpers ({
+    theCount: function() {
+      return Tasks.find({type: "idea"}).count();
+    }
+  });
+  Template.doneTodoCount.helpers ({
+    theCount: function() {
+      return Tasks.find(
+      {
+        standing:
+        {
+          $in: ["closed", "dismissed"]
+        },
+        type: "todo"
+      }).count();
+    }
+  });
   Template.closedTodos.helpers({
     closedTasks: function() {
 
@@ -27,20 +49,23 @@ if (Meteor.isClient) {
 					standing:
           {
 						$in: ["closed", "dismissed"]
-					}
+					},
+          type: "todo"
 				},
         {
 					sort:
           {
 						deletedAt: -1
 					},
-          limit: 40 
+          limit: 40
 				});
 
-		},
-		sortCompleted: function() {
-			return Session.get("sortCompleted");
 		}
+  });
+  Template.ideas.helpers({
+    items: function() {
+      return Tasks.find( {type: "idea"});
+    }
   });
 
   // Date format Mask
@@ -114,7 +139,13 @@ if (Meteor.isClient) {
       $("#" + this._id).modal('hide');
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
-		}
+		},
+    "click .btnMoveToIdeas": function() {
+      Meteor.call("moveToIdeas", this._id);
+      $("#" + this._id).modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+    }
   });
 
 	Template.closedTask.events({
@@ -137,6 +168,21 @@ if (Meteor.isClient) {
 
 	});
 
+  Template.ideaItems.events({
+    "click .btnMoveFromIdeas": function() {
+      Meteor.call("moveFromIdeas", this._id);
+      $("#" + this._id).modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+    },
+		"click .btnDelete": function() {
+			Meteor.call("deleteTask", this._id);
+      $("#" + this._id).modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+		}
+  });
+
 	Accounts.ui.config({
 		passwordSignupFields: "USERNAME_ONLY"
 	});
@@ -157,7 +203,9 @@ Meteor.methods({
     // insert the task into the collection
     Tasks.insert({
       text: text,
+      notes: text,
       standing: "open",
+      type: "todo",
       createdAt: new Date(),
       deletedAt: "",
       touched: 0,
@@ -174,13 +222,27 @@ Meteor.methods({
     Tasks.remove(taskID);
     Tasks.insert({
       text: task.text,
+      notes: task.notes,
       standing: "open",
+      type: task.type,
       createdAt: new Date(),
       deletedAt: "",
       touched: task.touched + 1,
       owner: Meteor.userId(),
       username: Meteor.user().username
     });
+  },
+  moveToIdeas: function(taskID) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+    Tasks.update({_id: taskID}, {$set: {type: "idea"}});
+  },
+  moveFromIdeas: function(taskID) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+    Tasks.update({_id: taskID}, {$set: {type: "todo", standing: "open"}});
   },
   closeTask: function(taskID) {
     if (!Meteor.userId()) {
