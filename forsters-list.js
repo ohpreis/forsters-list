@@ -22,23 +22,21 @@ if (Meteor.isClient) {
   Template.closedTodos.helpers({
     closedTasks: function() {
 
-			if (Session.get("sortCompleted")) {
-				return Tasks.find({
-					standing: {
+				return Tasks.find(
+        {
+					standing:
+          {
 						$in: ["closed", "dismissed"]
 					}
-				});
-			} else {
-				return Tasks.find({
-					standing: {
-						$in: ["closed", "dismissed"]
-					}
-				}, {
-					sort: {
+				},
+        {
+					sort:
+          {
 						deletedAt: -1
-					}
+					},
+          limit: 40 
 				});
-			}
+
 		},
 		sortCompleted: function() {
 			return Session.get("sortCompleted");
@@ -179,7 +177,7 @@ Meteor.methods({
       standing: "open",
       createdAt: new Date(),
       deletedAt: "",
-      touched: task.touched + 1, 
+      touched: task.touched + 1,
       owner: Meteor.userId(),
       username: Meteor.user().username
     });
