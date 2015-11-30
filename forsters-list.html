@@ -231,7 +231,7 @@
 							<h4 class="modal-title" id="myModalLabel">Closed</h4>
 						</div>
 						<div class="modal-body">
-							<p class="lead">{{text}}</p>
+							<p class="lead">{{#markdown}}{{text}}{{/markdown}}</p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-danger btnDelete" data-dismiss="modal">Delete</button>
@@ -292,7 +292,7 @@
 			{{#markdown}}<h5><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></h5>{{/markdown}}
 
 			<!-- Modal -->
-			<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="Ideas">
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -300,7 +300,7 @@
 							<h4 class="modal-title" id="myModalLabel">Idea</h4>
 						</div>
 						<div class="modal-body">
-							<p class="lead">{{text}}</p>
+							<p class="lead">{{#markdown}}{{text}}{{/markdown}}</p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-danger btnDelete" data-dismiss="modal">Delete</button>
