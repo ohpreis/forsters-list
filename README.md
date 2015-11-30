@@ -2,15 +2,16 @@
 
 > A simple todo list based on David Forster's "Autofocus Time Management" methodology.
 
-You can read all about David Forster's way of doing To Dos on his website. http://markforster.squarespace.com/autofocus-system/
+You can read all about David Forster's way of doing todos on his website. http://markforster.squarespace.com/autofocus-system/
 
 ---
 
 ## Installaling the App
-Forster's List is build using the awesome Meteorjs framework. So first install
-Meteor on your computer. (http://meteor.com).
+Forster's List is build on the awesome Meteor JavaScript App Platform. So, first download and install
+[Meteor](http://meteor.com) on your computer.
 
-Download and extract the zip file.
+Next download and extract the [forsters-list-master zip file](https://github.com/ohpreis/forsters-list/archive/master.zip).
+
 Open a terminal window, change into the forsters-list-master directory and run meteor.
 
     meteor run
@@ -24,13 +25,13 @@ Once you have logged in you are ready to get started.
 ### Intro to Forster's List
 * Foster's list is implemented as one long list of todos.
 * One input field for you to add new todos.
-* A list of completed or dismissed items.
+* A list of the most recent completed or dismissed items.
 
 **Getting started**
 
-You start by adding your todos to get done.
+Start by adding your todos.
 
-> **A word of caution**: Only add "to do" items and not **events**. Events have a date/time for when it is happening. Events should be added to a calendar app, preferably with a reminder set so you don't miss them.
+> **A word of caution**: Only add "to do" items and not **events**. Events have a date/time for when something is or has to happen. Events should be added to a calendar app, preferably with a reminder set so you don't miss them.
 
 
 **Here is the basic work through.**
@@ -44,4 +45,4 @@ Once you added your todos.
 * Rinse and repeat this process.
 * If you run over an item that just does not want to get done. Don't keep it in the list,  but mark it as "Dismissed" or move it to the ideas section.
 
-I recommend reading through [David Forster's](http://markforster.squarespace.com/autofocus-system/) instructions before getting started.
+I recommend reading through [David Forster's](http://markforster.squarespace.com/autofocus-system/) instructions before getting to involved.
