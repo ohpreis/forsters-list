@@ -220,7 +220,7 @@
 <template name="closedTask">
 
 			<tr class="{{isDismissed standing}}"><td>
-			{{#markdown}}<h5><s><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></s></h5>{{/markdown}}
+			<h5><s><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></s></h5>
 
 			<!-- Modal -->
 			<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -289,7 +289,7 @@
 <template name="ideaItems">
 
 			<tr class=""><td>
-			{{#markdown}}<h5><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></h5>{{/markdown}}
+			<h5><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></h5>
 
 			<!-- Modal -->
 			<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="Ideas">
