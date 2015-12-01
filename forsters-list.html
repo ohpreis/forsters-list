@@ -27,51 +27,51 @@
 
 	<div class="container">
 
-		<div class="row">
 
-				<ul class="breadcrumb" style="margin-bottom: 0px; border-bottom: thin solid #333">
+		<div class="row">
+				<!-- Login stuff -->
+				<ul class="breadcrumb" style="margin-bottom: 0px; border-bottom: thin solid #333;">
 					{{> loginButtons align="left"}}
 					{{#if currentUser}}
 						{{else}}
 						<li><span class="label label-warning">Please login!</span></li>
 					{{/if}}
 				</ul>
+		</div>
+
+		{{#if currentUser}}
+		<div class="row">
+				<!-- Nav tabs -->
+					<ul class="nav nav-tabs" role="tablist">
+						<li role="presentation" class="active">
+							<a href="#home" aria-controls="home" role="tab" data-toggle="tab">Inbox {{> todoCount}} </a>
+						</li>
+						<li role="presentation">
+							<a title="Done/Dismissed" href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Done</a>
+						</li>
+						<li role="presentation">
+							<a title="Put all your ideas in here" href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Ideas {{> ideaCount}}</a>
+						</li>
+					</ul>
+		</div>
 
 
-			<!-- Nav tabs -->
-			{{#if currentUser}}
-			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active">
-					<a href="#home" aria-controls="home" role="tab" data-toggle="tab">Inbox {{> todoCount}} </a>
-				</li>
-				<li role="presentation">
-					<a title="Done/Dismissed" href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Done</a>
-				</li>
-				<li role="presentation">
-					<a title="Put all your ideas in here" href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Ideas {{> ideaCount}}</a>
-				</li>
-			</ul>
-		{{/if}}
-
-				{{#if currentUser}}
-				<div class="col-xs-12">
-
-						<!-- Tab panes -->
-						<div class="tab-content">
-							<div role="tabpanel" class="tab-pane active" id="home">
-									{{> todos}}
-							</div>
-							<div role="tabpanel" class="tab-pane" id="profile">
-									{{> closedTodos}}
-							</div>
-							<div role="tabpanel" class="tab-pane" id="messages">
-									{{> ideas}}
-							</div>
+					<!-- Tab panes -->
+					<div class="tab-content">
+						<div role="tabpanel" class="tab-pane active" id="home">
+								{{> todos}}
 						</div>
-				</div>
+						<div role="tabpanel" class="tab-pane" id="profile">
+								{{> closedTodos}}
+						</div>
+						<div role="tabpanel" class="tab-pane" id="messages">
+								{{> ideas}}
+						</div>
+					</div>
+
 				{{/if}} <!-- end: currentUser -->
 
-		</div>
+
 
 	</div>
 
