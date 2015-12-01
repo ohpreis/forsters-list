@@ -14,19 +14,19 @@ if (Meteor.isClient) {
 	Template.todos.helpers({
 		tasks: function() {
 			return Tasks.find({
-				standing: "open", type: "todo"
+				standing: "open", type: "todo", username: "ohpreis@gmail.com"
 			});
 		}
 	});
 
   Template.todoCount.helpers ({
     theCount: function() {
-      return Tasks.find({standing: "open", type: "todo"}).count();
+      return Tasks.find({standing: "open", type: "todo", username: "ohpreis@gmail.com"}).count();
     }
   });
   Template.ideaCount.helpers ({
     theCount: function() {
-      return Tasks.find({type: "idea"}).count();
+      return Tasks.find({type: "idea", username: "ohpreis@gmail.com"}).count();
     }
   });
   Template.doneTodoCount.helpers ({
@@ -37,7 +37,7 @@ if (Meteor.isClient) {
         {
           $in: ["closed", "dismissed"]
         },
-        type: "todo"
+        type: "todo", username: "ohpreis@gmail.com"
       }).count();
     }
   });
@@ -50,7 +50,7 @@ if (Meteor.isClient) {
           {
 						$in: ["closed", "dismissed"]
 					},
-          type: "todo"
+          type: "todo", username: "ohpreis@gmail.com"
 				},
         {
 					sort:
@@ -64,7 +64,7 @@ if (Meteor.isClient) {
   });
   Template.ideas.helpers({
     items: function() {
-      return Tasks.find( {type: "idea"});
+      return Tasks.find( {type: "idea", username: "ohpreis@gmail.com"});
     }
   });
 
@@ -168,7 +168,7 @@ if (Meteor.isClient) {
 
 	});
 
-  Template.ideaItems.events({
+  Template.idea.events({
     "click .btnMoveFromIdeas": function() {
       Meteor.call("moveFromIdeas", this._id);
       $("#" + this._id).modal('hide');
@@ -183,9 +183,24 @@ if (Meteor.isClient) {
 		}
   });
 
-	Accounts.ui.config({
-		passwordSignupFields: "USERNAME_ONLY"
-	});
+  Accounts.ui.config({
+      requestPermissions: {},
+      extraSignupFields: [{
+          fieldName: 'terms',
+          fieldLabel: 'I accept the terms and conditions',
+          inputType: 'checkbox',
+          visible: true,
+          saveToProfile: false,
+          validate: function(value, errorFunction) {
+              if (value) {
+                  return true;
+              } else {
+                  errorFunction('You must accept the terms and conditions.');
+                  return false;
+              }
+          }
+      }]
+  });
 
   Template.body.onRendered = function () {
     $('head').append( '<meta name="viewport" content="width=device-width, initial-scale=1">' );
@@ -199,11 +214,10 @@ Meteor.methods({
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
-
     // insert the task into the collection
     Tasks.insert({
       text: text,
-      notes: text,
+      notes: "",
       standing: "open",
       type: "todo",
       createdAt: new Date(),
@@ -236,7 +250,7 @@ Meteor.methods({
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
-    Tasks.update({_id: taskID}, {$set: {type: "idea"}});
+    Tasks.update({_id: taskID}, {$set: {type: "idea", standing: "open"}});
   },
   moveFromIdeas: function(taskID) {
     if (!Meteor.userId()) {

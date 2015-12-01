@@ -18,7 +18,7 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 
 momentjs:moment
 ls3271:meteor-linkify
-accounts-ui
 accounts-password
 markdown
 twbs:bootstrap
+ian:accounts-ui-bootstrap-3
