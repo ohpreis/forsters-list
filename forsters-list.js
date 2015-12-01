@@ -14,19 +14,19 @@ if (Meteor.isClient) {
 	Template.todos.helpers({
 		tasks: function() {
 			return Tasks.find({
-				standing: "open", type: "todo", username: "ohpreis@gmail.com"
+				standing: "open", type: "todo"
 			});
 		}
 	});
 
   Template.todoCount.helpers ({
     theCount: function() {
-      return Tasks.find({standing: "open", type: "todo", username: "ohpreis@gmail.com"}).count();
+      return Tasks.find({standing: "open", type: "todo"}).count();
     }
   });
   Template.ideaCount.helpers ({
     theCount: function() {
-      return Tasks.find({type: "idea", username: "ohpreis@gmail.com"}).count();
+      return Tasks.find({type: "idea"}).count();
     }
   });
   Template.doneTodoCount.helpers ({
@@ -37,7 +37,7 @@ if (Meteor.isClient) {
         {
           $in: ["closed", "dismissed"]
         },
-        type: "todo", username: "ohpreis@gmail.com"
+        type: "todo"
       }).count();
     }
   });
@@ -50,7 +50,7 @@ if (Meteor.isClient) {
           {
 						$in: ["closed", "dismissed"]
 					},
-          type: "todo", username: "ohpreis@gmail.com"
+          type: "todo"
 				},
         {
 					sort:
@@ -64,7 +64,7 @@ if (Meteor.isClient) {
   });
   Template.ideas.helpers({
     items: function() {
-      return Tasks.find( {type: "idea", username: "ohpreis@gmail.com"});
+      return Tasks.find( {type: "idea"});
     }
   });
 
@@ -184,6 +184,7 @@ if (Meteor.isClient) {
   });
 
   Accounts.ui.config({
+      passwordSignupFields: "USERNAME_ONLY",
       requestPermissions: {},
       extraSignupFields: [{
           fieldName: 'terms',
@@ -203,7 +204,7 @@ if (Meteor.isClient) {
   });
 
   Template.body.onRendered = function () {
-    $('head').append( '<meta name="viewport" content="width=device-width; height=device-height; maximum-scale=1.0; initial-scale=1.0; user-scalable=no"/>' );
+    $('head').append( '<meta name=viewport content="width=device-width, initial-scale=1">' );
   }
 
 } // End of is client
