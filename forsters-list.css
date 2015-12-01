@@ -12,6 +12,7 @@ table caption { font-weight: bold }
 	opacity: .5;
 }
 
+.openModal { cursor: pointer;}
 .bg-dismissed {
 	color: orange;
 }

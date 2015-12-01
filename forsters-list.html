@@ -132,10 +132,7 @@
 <template name="task">
 
 		<tr><td>
-		<h4>
-			<a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a>
-		</h4>
-
+			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{text}}</p>
 		<!-- Modal -->
 		<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="Open Todos">
 			<div class="modal-dialog" role="document">
@@ -208,7 +205,7 @@
 <template name="closedTask">
 
 			<tr class="{{isDismissed standing}}"><td>
-			<h4><s><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></s></h4>
+			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}"><s>{{text}}</s></p>
 
 			<!-- Modal -->
 			<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="Done Todos">
@@ -276,7 +273,7 @@
 <template name="idea">
 
 			<tr class=""><td>
-			<h4><a href="#" class="openModal" data-toggle="modal" data-target="#{{_id}}">{{text}}</a></h4>
+			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{text}}</p>
 
 			<!-- Modal -->
 			<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="Ideas">
