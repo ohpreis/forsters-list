@@ -2,7 +2,7 @@ Tasks = new Mongo.Collection("tasks");
 
 if (Meteor.isServer) {
     Meteor.publish("tasks", function(argument){
-       return Tasks.find();
+       return Tasks.find({}, {});
     });
 }
 
@@ -13,9 +13,7 @@ if (Meteor.isClient) {
   // This code only runs on the client
 	Template.todos.helpers({
 		tasks: function() {
-			return Tasks.find({
-				standing: "open", type: "todo"
-			});
+			return Tasks.find({ standing: "open", type: "todo"}, {sort: {createdAt: 1}});
 		}
 	});
 
@@ -64,7 +62,7 @@ if (Meteor.isClient) {
   });
   Template.ideas.helpers({
     items: function() {
-      return Tasks.find( {type: "idea"});
+      return Tasks.find( {type: "idea"}, {sort: {createdAt: -1}});
     }
   });
 
@@ -75,13 +73,13 @@ if (Meteor.isClient) {
 	};
 
 	// Format the date
-	UI.registerHelper("formatDate", function(deletedAt, format) {
+	UI.registerHelper("formatDate", function(datetoformat, format) {
 		if (moment) {
 			// can use other formats like 'lll' too
 			format = DateFormats[format] || format;
-			return moment(deletedAt).format(format);
+			return moment(datetoformat).format(format);
 		} else {
-			return deletedAt;
+			return datetoformat;
 		}
 	});
 
@@ -227,7 +225,6 @@ Meteor.methods({
       owner: Meteor.userId(),
       username: Meteor.user().username
     });
-    // $(document).foundation('reveal', 'reflow');
   },
   completeTask: function(taskID) {
     if (!Meteor.userId()) {
