@@ -7,19 +7,18 @@
 	<nav class="navbar navbar-default navbar-fixed-top">
 	<div class="container">
 		<div class="row">
-			<form class="form-inline new-task" role="search">
+			<form class="form-inline new-task" role="create task">
 				<div class="col-xs-1">
 					<p style="margin-top: 8px; font-weight:bold; line-height: 2em;" title="Forster's List">FL</p>
 				</div>
-			<div class="col-xs-8">
-
-	        <div class="form-group col-xs-12" style="margin-top: 6px;">
-	          <input style="width: 100%;" type="text" name="text" class="form-control" placeholder="New todo">
-	        </div>
-			</div>
-			<div class="col-xs-2">
-				<p style="margin-top: 6px;"><button type="submit" class="btn btn-primary">Go</button></p>
-			</div>
+				<div class="col-xs-9">
+		        <div class="form-group col-xs-12" style="margin-top: 6px;">
+		          <input style="width: 100%;" type="text" name="text" class="form-control" placeholder="New todo">
+		        </div>
+				</div>
+				<div class="col-xs-2">
+					<p style="margin-top: 6px;"><button type="submit" class="btn btn-primary">Go</button></p>
+				</div>
 			</form>
 		</div>
 	</div>
@@ -132,35 +131,40 @@
 <template name="task">
 
 		<tr><td>
-			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{text}}</p>
+			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{#markdown}}{{text}}{{/markdown}}</p>
 		<!-- Modal -->
 		<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="Open Todos">
 			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-						<h4 class="modal-title" id="todos">FL</h4>
-					</div>
-					<div class="modal-body">
-						<p class="lead">{{#markdown}}{{text}}{{/markdown}}</p>
-						<p>Worked on: <span class="label label-primary pulls-right">{{touched}}</span></p>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-success btn-sm btnDone" data-dismiss="modal">
-							Done
-						</button>
-						<button type="button" class="btn btn-warning btn-sm btnDismiss" data-dismiss="modal">
-							Dissed
-						</button>
-						<button type="button" class="btn btn-primary btn-sm btnClose" data-dismiss="modal">
-							Close
-						</button>
-						<button type="button" class="btn btn-info btn-sm btnMoveToIdeas" data-dismiss="modal">
-							Idea
-						</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">&times;</button>
-					</div>
-				</div>
+				<form name="updateNotes" class="updateNotes">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title" id="todos">FL</h4>
+							</div>
+							<div class="modal-body">
+								<p class="lead">{{#markdown}}{{text}}{{/markdown}}</p>
+								<p>
+										<textarea class="form-control notes_field" placeholder="Add some notes" name="notes" rows="3">{{notes}}</textarea>
+								</p>
+								<p>Worked on: <span class="label label-primary pulls-right">{{touched}}</span></p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-success btn-sm btnDone" data-dismiss="modal">
+									Done
+								</button>
+								<button type="button" class="btn btn-warning btn-sm btnDismiss" data-dismiss="modal">
+									Dissed
+								</button>
+								<button type="button" class="btn btn-primary btn-sm btnClose" data-dismiss="modal">
+									Close
+								</button>
+								<button type="button" class="btn btn-info btn-sm btnMoveToIdeas" data-dismiss="modal">
+									Idea
+								</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">&times;</button>
+							</div>
+						</div>
+				</form>
 			</div>
 		</div>
 	</td>
@@ -207,7 +211,7 @@
 <template name="closedTask">
 
 			<tr class="{{isDismissed standing}}"><td>
-			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}"><s>{{text}}</s></p>
+			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}"><s>{{#markdown}}{{text}}{{/markdown}}</s></p>
 
 			<!-- Modal -->
 			<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="Done Todos">
@@ -219,6 +223,9 @@
 						</div>
 						<div class="modal-body">
 							<p class="lead">{{#markdown}}{{text}}{{/markdown}}</p>
+							<p>
+									{{notes}}
+							</p>
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-danger btn-sm btnDelete" data-dismiss="modal">Delete</button>
@@ -275,7 +282,7 @@
 <template name="idea">
 
 			<tr><td>
-			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{text}}</p>
+			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{#markdown}}{{text}}{{/markdown}}</p>
 
 			<!-- Modal -->
 			<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="Ideas">
@@ -287,8 +294,12 @@
 						</div>
 						<div class="modal-body">
 							<p class="lead">{{#markdown}}{{text}}{{/markdown}}</p>
+							<p>
+									<textarea class="form-control notes_field" placeholder="Add notes to your ideas" name="notes" rows="3">{{notes}}</textarea>
+							</p>
 						</div>
 						<div class="modal-footer">
+							<button type="button" class="btn btn-success btn-sm btnSaveNotes">Save</button>
 							<button type="button" class="btn btn-danger btn-sm btnDelete" data-dismiss="modal">Delete</button>
 							<button type="button" class="btn btn-primary btn-sm btnMoveFromIdeas">Open</button>
 							<button type="button" class="btn btn-default btn-sm" data-dismiss="modal">&times;</button>

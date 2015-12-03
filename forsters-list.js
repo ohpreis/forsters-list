@@ -115,31 +115,28 @@ if (Meteor.isClient) {
 		}
 	});
 
-	Template.task.events({
-
-	});
-
   Template.task.events({
-    "click .btnDone": function(e) {
-    	Meteor.call("completeTask", this._id);
+
+    "click .btnDone": function(event, template) {
+    	Meteor.call( "completeTask", this._id, template.find(".notes_field").value );
       $("#" + this._id).modal('hide');
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
     },
-		"click .btnClose": function() {
-			Meteor.call("closeTask", this._id);
+		"click .btnClose": function(event, template) {
+			Meteor.call("closeTask", this._id, template.find(".notes_field").value);
       $("#" + this._id).modal('hide');
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
 		},
-		"click .btnDismiss": function() {
-			Meteor.call("dismissTask", this._id)
+		"click .btnDismiss": function(event, template) {
+			Meteor.call("dismissTask", this._id, template.find(".notes_field").value)
       $("#" + this._id).modal('hide');
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
 		},
-    "click .btnMoveToIdeas": function() {
-      Meteor.call("moveToIdeas", this._id);
+    "click .btnMoveToIdeas": function(event, template) {
+      Meteor.call("moveToIdeas", this._id, template.find(".notes_field").value);
       $("#" + this._id).modal('hide');
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
@@ -173,6 +170,12 @@ if (Meteor.isClient) {
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
     },
+    "click .btnSaveNotes": function (event, template) {
+      Meteor.call("saveNotes", this._id, template.find(".notes_field").value);
+      $("#" + this._id).modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();
+    }, 
 		"click .btnDelete": function() {
 			Meteor.call("deleteTask", this._id);
       $("#" + this._id).modal('hide');
@@ -226,7 +229,7 @@ Meteor.methods({
       username: Meteor.user().username
     });
   },
-  completeTask: function(taskID) {
+  completeTask: function(taskID, notes) {
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
@@ -234,7 +237,7 @@ Meteor.methods({
     Tasks.remove(taskID);
     Tasks.insert({
       text: task.text,
-      notes: task.notes,
+      notes: notes,
       standing: "open",
       type: task.type,
       createdAt: new Date(),
@@ -243,6 +246,12 @@ Meteor.methods({
       owner: Meteor.userId(),
       username: Meteor.user().username
     });
+  },
+  saveNotes: function(taskID, note) {
+    if (!Meteor.userId()) {
+      throw new Meteor.Error("not-authorized");
+    }
+    Tasks.update({_id: taskID}, {$set:{ notes: note }});
   },
   moveToIdeas: function(taskID) {
     if (!Meteor.userId()) {
