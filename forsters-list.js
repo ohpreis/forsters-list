@@ -318,7 +318,7 @@ Meteor.startup(function(){
   // configure accounts
   Accounts.config({
       sendVerificationEmail: true,
-      forbidClientAccountCreation: false
+      forbidClientAccountCreation: true
   });
 
 });
