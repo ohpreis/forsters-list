@@ -175,7 +175,7 @@ if (Meteor.isClient) {
       $("#" + this._id).modal('hide');
       $('body').removeClass('modal-open');
       $('.modal-backdrop').remove();
-    }, 
+    },
 		"click .btnDelete": function() {
 			Meteor.call("deleteTask", this._id);
       $("#" + this._id).modal('hide');
@@ -185,7 +185,7 @@ if (Meteor.isClient) {
   });
 
   Accounts.ui.config({
-      passwordSignupFields: "USERNAME_ONLY",
+      passwordSignupFields: "USERNAME_AND_EMAIL",
       requestPermissions: {},
       extraSignupFields: [{
           fieldName: 'terms',
@@ -304,4 +304,21 @@ Meteor.methods({
       }
     });
   }
+});
+Meteor.startup(function(){
+  // setup to send email
+  smtp = {
+      username: 'postmaster@sandbox82121.mailgun.org',       // eg: server@gentlenode.com
+      password: '7t9bg7q6xym1',     // eg: 3eeP1gtizk5eziohfervU
+      server:   'sandbox82121.mailgun.org',       // eg: mail.gandi.net
+      port: 587
+  };
+  process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port + '/';
+
+  // configure accounts
+  Accounts.config({
+      sendVerificationEmail: true,
+      forbidClientAccountCreation: false
+  });
+
 });
