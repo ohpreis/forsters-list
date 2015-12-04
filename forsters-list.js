@@ -4,6 +4,24 @@ if (Meteor.isServer) {
     Meteor.publish("tasks", function(argument){
        return Tasks.find({}, {});
     });
+
+    Meteor.startup(function(){
+      // setup to send email
+      smtp = {
+          username: '',       // eg: server@someplace.com
+          password: '',       // eg: 3eeP1gtizk5eziohfervU
+          server:   '',       // eg: mail.gandi.net
+          port: 587
+      };
+      process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port + '/';
+
+      // configure accounts
+      Accounts.config({
+          sendVerificationEmail: true,
+          forbidClientAccountCreation: false
+      });
+
+    });
 }
 
 if (Meteor.isClient) {
@@ -304,21 +322,4 @@ Meteor.methods({
       }
     });
   }
-});
-Meteor.startup(function(){
-  // setup to send email
-  smtp = {
-      username: 'postmaster@sandbox82121.mailgun.org',       // eg: server@gentlenode.com
-      password: '7t9bg7q6xym1',     // eg: 3eeP1gtizk5eziohfervU
-      server:   'sandbox82121.mailgun.org',       // eg: mail.gandi.net
-      port: 587
-  };
-  process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port + '/';
-
-  // configure accounts
-  Accounts.config({
-      sendVerificationEmail: true,
-      forbidClientAccountCreation: true
-  });
-
 });
