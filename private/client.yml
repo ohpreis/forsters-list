@@ -1,5 +1,0 @@
-# in your meteor app: /private/config/server.yml
-redis_db:
-    mg_user: postmaster@sandbox82121.mailgun.org
-    mg_pass: W9a-gBJ-wWC-v2K
-    mg_serv: smtp.mailgun.org
