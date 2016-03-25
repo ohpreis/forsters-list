@@ -4,29 +4,46 @@
 
 <body>
 
+	<!-- 	Main Navigation bar.
+				This holds the add new todo
+	************************************************************************ -->
 	<nav class="navbar navbar-default navbar-fixed-top">
-	<div class="container">
-		<div class="row">
-			<form class="form-inline new-task" role="create task">
-				<div class="col-xs-1">
-					<p style="margin-top: 8px; font-weight:bold; line-height: 2em;" title="Forster's List">FL</p>
-				</div>
-				<div class="col-xs-9">
-		        <div class="form-group col-xs-12" style="margin-top: 6px;">
-		          <input style="width: 100%;" type="text" name="text" class="form-control" placeholder="New todo">
-		        </div>
-				</div>
-				<div class="col-xs-2">
-					<p style="margin-top: 6px;"><button type="submit" class="btn btn-primary">Go</button></p>
-				</div>
-			</form>
+		<div class="container">
+			<div class="row">
+
+				<form class="form-inline new-task" role="create task">
+
+					<div class="col-xs-1">
+						<p style="margin-top: 8px; font-weight:bold; line-height: 2em;" title="Forster's List">FL</p>
+					</div>
+
+					<div class="col-xs-8">
+			        <div class="form-group col-xs-12" style="margin-top: 6px;">
+			          <input style="width: 100%;" type="text" name="text" class="form-control" placeholder="New todo" />
+			        </div>
+					</div>
+
+					<div class="col-xs-3">
+						<p style="margin-top: 6px;">
+							<button type="submit" class="btn btn-primary">Go</button>
+							{{#if currentUser}}<a class="settings" href=""><span class="glyphicon glyphicon glyphicon-cog" aria-hidden="true"></span></a>{{/if}}
+						</p>
+					</div>
+
+				</form>
+
+			</div>
 		</div>
-	</div>
 	</nav>
 
+	<!-- 	Main Content Container.
+				Tabs
+	************************************************************************ -->
 	<div class="container">
 
 
+		<!-- 	The login item.
+		************************************************************************ -->
 		<div class="row">
 				<!-- Login stuff -->
 				<ul class="breadcrumb" style="margin-bottom: 0px; border-bottom: thin solid #333;">
@@ -38,11 +55,15 @@
 				</ul>
 		</div>
 
+		<!-- 	Tabs
+		************************************************************************ -->
+
 		{{#if currentUser}}
 		<div class="row">
-				<!-- Nav tabs -->
+
 					<ul class="nav nav-tabs" role="tablist">
-						<li role="presentation" class="active">
+
+						<li role="presentation" class="actives">
 							<a href="#home" aria-controls="home" role="tab" data-toggle="tab">Inbox {{> todoCount}} </a>
 						</li>
 						<li role="presentation">
@@ -51,45 +72,112 @@
 						<li role="presentation">
 							<a title="Put all your ideas in here" href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Ideas {{> ideaCount}}</a>
 						</li>
+
 					</ul>
+
 		</div>
 
 
-					<!-- Tab panes -->
+		<!-- 	Tab Content Containers.
+		************************************************************************ -->
+		<div class="content-wrapper" style="display: {{getSettings "showdata"}}">
+
 					<div class="tab-content">
+
+						<!-- 	Todos Tab
+						************************************************************************ -->
 						<div role="tabpanel" class="tab-pane active" id="home">
 								{{> todos}}
 						</div>
+						<!-- 	Closed Todos Tab
+						************************************************************************ -->
 						<div role="tabpanel" class="tab-pane" id="profile">
 								{{> closedTodos}}
 						</div>
+						<!-- 	Ideas Tab
+						************************************************************************ -->
 						<div role="tabpanel" class="tab-pane" id="messages">
 								{{> ideas}}
 						</div>
 					</div>
 
-				{{/if}} <!-- end: currentUser -->
+		</div>
+
+	 {{/if}} <!-- end: currentUser -->
+
+	 <!-- Email Settings
+	 			This is just for reviewing
+ 	************************************************************************ -->
+	 {{#if currentUser}}
+				<div class="row settings-container" style="display: {{getSettings "showsetup"}}">
+					{{> appsettings}}
+				</div>
+	 {{/if}}
 
 
-
-	</div>
+ </div><!-- END: Container -->
 
 </body>
 
 
+<!-- 	Start: Templates
+************************************************************************ -->
+
+<!-- 	Helper to display the total count for TODOS
+************************************************************************ -->
 <template name="todoCount">
 	<span class="badge">{{theCount}}</span>
 </template>
+
+<!-- 	Helper to display the total count for DONE TODOS
+************************************************************************ -->
 <template name="doneTodoCount">
 	<span class="badge">{{theCount}}</span>
 </template>
+
+<!-- 	Helper to display the total count for IDEAS
+************************************************************************ -->
 <template name="ideaCount">
 	<span class="badge">{{theCount}}</span>
 </template>
 
+<!-- 	Email Settings Template
+************************************************************************ -->
+<template name="appsettings">
+
+	<div class="col-xs-12">
+		<form name="settings-form">
+			<br />
+			<div>
+				<p class="lead">Email setup is used by the system to send verification and recovery messages.</p>
+				<p class="alert alert-warning">
+					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+					Your current settings are as follows!</p>
+			</div>
+			<div class="form-group">
+				<label for="username">Username</label>
+				<input disabled type="text" class="form-control" id="username" placeholder="eg: server@mymailserver.com" value="{{getSettings "username"}}">
+			</div>
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input disabled type="password" class="form-control" id="password" placeholder="eg: 3eeP1gtizk5eziohfervU" value="{{getSettings "password"}}">
+			</div>
+			<div class="form-group">
+				<label for="server">Server</label>
+				<input disabled type="text" class="form-control" id="server" placeholder="eg: mail.mymailserver.net" value="{{getSettings "server"}}">
+			</div>
+			<div class="form-group">
+				<label for="port">Port</label>
+				<input disabled type="text" class="form-control col-xs-2" id="port" placeholder="eg: 587" value="{{getSettings "port"}}">
+			</div>
+		</form>
+	</div>
 
 
-<!-- Cycle through the todolist -->
+</template>
+
+<!-- 	Todos Main
+************************************************************************ -->
 <template name="todos">
 
 	{{#if tasks.count != undefined}}
@@ -127,7 +215,8 @@
 
 </template>
 
-<!--  Open todo items -->
+<!-- 	Todos Modal Box
+************************************************************************ -->
 <template name="task">
 
 		<tr><td>
@@ -156,7 +245,7 @@
 									Dissed
 								</button>
 								<button type="button" class="btn btn-primary btn-sm btnClose" data-dismiss="modal">
-									Close
+									Close!
 								</button>
 								<button type="button" class="btn btn-info btn-sm btnMoveToIdeas" data-dismiss="modal">
 									Idea
@@ -173,6 +262,9 @@
 
 </template><!-- End: List the open tasks -->
 
+
+<!-- 	Closed Todos List
+************************************************************************ -->
 <template name="closedTodos">
 
 		{{#if closedTasks.count != undefined}}
@@ -207,7 +299,8 @@
 
 </template>
 
-<!-- Cycle through the todolist -->
+<!-- 	Closed Tasks Modal
+************************************************************************ -->
 <template name="closedTask">
 
 			<tr class="{{isDismissed standing}}"><td>
@@ -240,7 +333,8 @@
 
 </template>
 
-<!-- Cycle through the ideaList -->
+<!-- 	Ideas
+************************************************************************ -->
 <template name="ideas">
 
 	{{#if items.count != undefined}}
@@ -278,7 +372,8 @@
 
 </template>
 
-<!-- Cycle through the todolist -->
+<!-- 	Ideas Tasks Modal
+************************************************************************ -->
 <template name="idea">
 
 			<tr><td>

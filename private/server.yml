@@ -1,0 +1,8 @@
+# in your meteor app: /private/config/server.yml
+redis_db:
+    url: http://localhost:1234
+    mg_user: postmaster@sandbox82121.mailgun.org
+    mg_pass: W9a-gBJ-wWC-v2K
+    mg_serv: smtp.mailgun.org
+newsletter:
+  sender: example@mail.com
