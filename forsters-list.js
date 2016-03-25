@@ -1,17 +1,22 @@
+// The task collection
 Tasks = new Mongo.Collection("tasks");
 
 if (Meteor.isServer) {
+
     Meteor.publish("tasks", function(argument){
-       return Tasks.find({}, {});
+
+      return Tasks.find({ owner: this.userId }, {});
+
     });
 
     Meteor.startup(function(){
+
       // setup to send email
       smtp = {
-          username: '',       // eg: server@someplace.com
-          password: '',       // eg: 3eeP1gtizk5eziohfervU
-          server:   '',       // eg: mail.gandi.net
-          port: 587
+          username: Meteor.settings.public.username,      // eg: server@gentlenode.com
+          password: Meteor.settings.public.password,      // eg: 3eeP1gtizk5eziohfervU
+          server:   Meteor.settings.public.server,        // eg: mail.gandi.net
+          port: Meteor.settings.public.port               // eg: 587
       };
       process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port + '/';
 
@@ -27,6 +32,8 @@ if (Meteor.isServer) {
 if (Meteor.isClient) {
 
   Meteor.subscribe("tasks");
+
+  console.log("This is it - " + Meteor.userId());
 
   // This code only runs on the client
 	Template.todos.helpers({
@@ -84,6 +91,10 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.appsettings.helpers({
+
+  });
+
   // Date format Mask
 	var DateFormats = {
 		short: "DD MMMM - YYYY",
@@ -109,6 +120,46 @@ if (Meteor.isClient) {
 			return "bg-closed";
 		}
 	});
+  UI.registerHelper("getSettings", function(whatsetting){
+
+    console.log("The log " + whatsetting);
+
+    if (whatsetting === "username") {
+      return Meteor.settings.public.username;
+    } else if (whatsetting === "password") {
+      return Meteor.settings.public.password;
+    } else if (whatsetting === "server") {
+      return Meteor.settings.public.server;
+    } else if (whatsetting === "port") {
+      return Meteor.settings.public.port;
+    }
+    else if (whatsetting === "showsetup")
+    {
+      if (Meteor.settings.public.port === "" ||
+          Meteor.settings.public.username === "" ||
+          Meteor.settings.public.password === "" ||
+          Meteor.settings.public.server === "") {
+            return "block";
+          } else {
+            return "none";
+          }
+
+    }
+    else if (whatsetting === "showdata")
+    {
+      if (Meteor.settings.public.port === "" ||
+          Meteor.settings.public.username === "" ||
+          Meteor.settings.public.password === "" ||
+          Meteor.settings.public.server === "") {
+            return "none";
+          } else {
+            return "block";
+          }
+
+    } else {
+      return "undefinedstuff";
+    }
+  });
 
 	Template.body.events({
 
@@ -120,7 +171,7 @@ if (Meteor.isClient) {
 			// get the value from the form element
 			var text = event.target.text.value;
 
-      if (text.length <= 5) {
+      if (text.length <= 3) {
         alert("There ought to be some text, no?");
         return false;
       }
@@ -130,7 +181,12 @@ if (Meteor.isClient) {
 
 			// clear the form for more
 			event.target.text.value = "";
-		}
+		},
+    "click .settings": function(event) {
+      $(".settings-container").toggle("slow");
+      $(".content-wrapper").toggle("slow");
+      return false;
+    }
 	});
 
   Template.task.events({
@@ -283,14 +339,15 @@ Meteor.methods({
     }
     Tasks.update({_id: taskID}, {$set: {type: "todo", standing: "open"}});
   },
-  closeTask: function(taskID) {
+  closeTask: function(taskID, note) {
     if (!Meteor.userId()) {
       throw new Meteor.Error("not-authorized");
     }
     Tasks.update(taskID, {
       $set: {
         standing: "closed",
-        deletedAt: new Date()
+        deletedAt: new Date(),
+        notes: note
       }
     });
   },
