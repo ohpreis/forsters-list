@@ -220,7 +220,8 @@
 <template name="task">
 
 		<tr><td>
-			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{#markdown}}{{text}}{{/markdown}}</p>
+			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{#markdown}}{{text}} {{#if notes}}<span class="glyphicon glyphicon glyphicon-paperclip" aria-hidden="true"> </span>{{/if}}{{/markdown}}
+			</p>
 		<!-- Modal -->
 		<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="Open Todos">
 			<div class="modal-dialog" role="document">
@@ -377,7 +378,7 @@
 <template name="idea">
 
 			<tr><td>
-			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{#markdown}}{{text}}{{/markdown}}</p>
+			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{#markdown}}{{text}} {{#if notes}}<span class="glyphicon glyphicon glyphicon-paperclip" aria-hidden="true"> </span>{{/if}}{{/markdown}}</p>
 
 			<!-- Modal -->
 			<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="Ideas">
