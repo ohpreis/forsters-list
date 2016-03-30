@@ -33,8 +33,6 @@ if (Meteor.isClient) {
 
   Meteor.subscribe("tasks");
 
-  console.log("This is it - " + Meteor.userId());
-
   // This code only runs on the client
 	Template.todos.helpers({
 		tasks: function() {
@@ -121,8 +119,6 @@ if (Meteor.isClient) {
 		}
 	});
   UI.registerHelper("getSettings", function(whatsetting){
-
-    console.log("The log " + whatsetting);
 
     if (whatsetting === "username") {
       return Meteor.settings.public.username;

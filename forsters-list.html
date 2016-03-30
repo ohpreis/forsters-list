@@ -184,15 +184,10 @@
 
 			<div class="row">
 				<div class="col-xs-12">
-					<table class="table">
-						<tbody>
 							<!--  Todo items -->
 							{{#each tasks}}
 									{{> task}}
 							{{/each}}
-						</tbody>
-					</table>
-
 				</div>
 			</div>
 
@@ -219,9 +214,21 @@
 ************************************************************************ -->
 <template name="task">
 
-		<tr><td>
-			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{#markdown}}{{text}} {{#if notes}}<span class="glyphicon glyphicon glyphicon-paperclip" aria-hidden="true"> </span>{{/if}}{{/markdown}}
+		<div class="task-row" style="margin: 8px 0 3px 0; border-bottom: thin solid #dedede;">
+
+			{{#if notes}}
+				<p class="pull-left">
+					<span class="glyphicon glyphicon glyphicon-paperclip" aria-hidden="true" style="padding-right: 10px;"> </span>
+				</p>
+			{{else}}
+				<p class="pull-left" style="padding-left: 25px;"> </p>
+			{{/if}}
+
+			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">
+				<span class="pull-right badge">{{formatDate createdAt "short"}}</span>{{#markdown}}{{text}}{{/markdown}}
 			</p>
+
+	  </div>
 		<!-- Modal -->
 		<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="Open Todos">
 			<div class="modal-dialog" role="document">
@@ -257,9 +264,7 @@
 				</form>
 			</div>
 		</div>
-	</td>
-	<!-- <td>{{formatDate createdAt "long"}}</td> -->
-</tr>
+<!-- </tr> -->
 
 </template><!-- End: List the open tasks -->
 
@@ -378,7 +383,7 @@
 <template name="idea">
 
 			<tr><td>
-			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{#markdown}}{{text}} {{#if notes}}<span class="glyphicon glyphicon glyphicon-paperclip" aria-hidden="true"> </span>{{/if}}{{/markdown}}</p>
+			<p class="openModal text-primary" data-toggle="modal" data-target="#{{_id}}">{{#markdown}}{{text}} &nbsp; &nbsp;{{#if notes}}<span class="glyphicon glyphicon glyphicon-paperclip" aria-hidden="true"> </span>{{/if}}{{/markdown}}</p>
 
 			<!-- Modal -->
 			<div class="modal fade" id="{{_id}}" tabindex="-1" role="dialog" aria-labelledby="Ideas">
