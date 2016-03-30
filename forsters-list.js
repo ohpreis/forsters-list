@@ -13,10 +13,10 @@ if (Meteor.isServer) {
 
       // setup to send email
       smtp = {
-          username: Meteor.settings.public.username,      // eg: server@gentlenode.com
-          password: Meteor.settings.public.password,      // eg: 3eeP1gtizk5eziohfervU
-          server:   Meteor.settings.public.server,        // eg: mail.gandi.net
-          port: Meteor.settings.public.port               // eg: 587
+          username: Meteor.settings.mailgun.username,      // eg: server@gentlenode.com
+          password: Meteor.settings.mailgun.password,      // eg: 3eeP1gtizk5eziohfervU
+          server:   Meteor.settings.mailgun.server,        // eg: mail.gandi.net
+          port: Meteor.settings.mailgun.port               // eg: 587
       };
       process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port + '/';
 
