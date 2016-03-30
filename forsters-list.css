@@ -5,6 +5,7 @@ html, body {
   margin-top: 26px;
 }
 
+.text-primary a { color: #093e6c; text-decoration: underline;}
 table caption { font-weight: bold }
 
 .blurredstuff {
