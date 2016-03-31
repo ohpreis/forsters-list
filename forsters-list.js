@@ -13,10 +13,10 @@ if (Meteor.isServer) {
 
       // setup to send email
       smtp = {
-          username: Meteor.settings.public.username,      // eg: server@gentlenode.com
-          password: Meteor.settings.public.password,      // eg: 3eeP1gtizk5eziohfervU
-          server:   Meteor.settings.public.server,        // eg: mail.gandi.net
-          port: Meteor.settings.public.port               // eg: 587
+          username: 'postmaster@sandbox82121.mailgun.org',      // eg: server@gentlenode.com
+          password: 'LKs-NyP-Ts4-Xex',                          // eg: 3eeP1gtizk5eziohfervU
+          server:   'smtp.mailgun.org',                         // eg: mail.gandi.net
+          port:     '587'                                       // eg: 587
       };
       process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port + '/';
 
@@ -89,10 +89,6 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.appsettings.helpers({
-
-  });
-
   // Date format Mask
 	var DateFormats = {
 		short: "DD MMMM - YYYY",
@@ -118,44 +114,6 @@ if (Meteor.isClient) {
 			return "bg-closed";
 		}
 	});
-  UI.registerHelper("getSettings", function(whatsetting){
-
-    if (whatsetting === "username") {
-      return Meteor.settings.public.username;
-    } else if (whatsetting === "password") {
-      return Meteor.settings.public.password;
-    } else if (whatsetting === "server") {
-      return Meteor.settings.public.server;
-    } else if (whatsetting === "port") {
-      return Meteor.settings.public.port;
-    }
-    else if (whatsetting === "showsetup")
-    {
-      if (Meteor.settings.public.port === "" ||
-          Meteor.settings.public.username === "" ||
-          Meteor.settings.public.password === "" ||
-          Meteor.settings.public.server === "") {
-            return "block";
-          } else {
-            return "none";
-          }
-
-    }
-    else if (whatsetting === "showdata")
-    {
-      if (Meteor.settings.public.port === "" ||
-          Meteor.settings.public.username === "" ||
-          Meteor.settings.public.password === "" ||
-          Meteor.settings.public.server === "") {
-            return "none";
-          } else {
-            return "block";
-          }
-
-    } else {
-      return "undefinedstuff";
-    }
-  });
 
 	Template.body.events({
 
@@ -177,12 +135,7 @@ if (Meteor.isClient) {
 
 			// clear the form for more
 			event.target.text.value = "";
-		},
-    "click .settings": function(event) {
-      $(".settings-container").toggle("slow");
-      $(".content-wrapper").toggle("slow");
-      return false;
-    }
+		}
 	});
 
   Template.task.events({
