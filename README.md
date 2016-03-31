@@ -1,6 +1,6 @@
 # Forster's List
 
-> A simple todo list based on David Forster's ["Autofocus Time Management"](http://markforster.squarespace.com/autofocus-system/)"Autofocus Time Management" methodology.
+> A simple todo list based on David Forster's ["Autofocus Time Management"](http://markforster.squarespace.com/autofocus-system/)  methodology.
 
 You can learn all about David Forster's way of doing todos on his website. http://markforster.squarespace.com/autofocus-system/
 
