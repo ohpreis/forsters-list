@@ -22,6 +22,5 @@ twbs:bootstrap
 ian:accounts-ui-bootstrap-3
 accounts-base
 monbro:yaml-config-loader
-kurounin:pagination
 standard-minifier-css
 standard-minifier-js
