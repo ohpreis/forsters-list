@@ -19,7 +19,7 @@ If your don't have a smtp server you can sign up for free on (http://mailgun.com
 
     `meteor run --settings.json`
 
-- Open you browser [http://localhost:3000]
+- Open you browser (http://localhost:3000)
 
 **NOTE:** You need to create a login first. Click the "Sign in/Join" link to create your account. Once you created an account and have logged in you are ready to get started.
 
