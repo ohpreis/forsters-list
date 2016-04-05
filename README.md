@@ -17,7 +17,7 @@ If your don't have a smtp server you can sign up for free on (http://mailgun.com
 
 - Open a terminal window, change into the forsters-list-master directory and run meteor.
 
-    meteor run
+    meteor run --settings.json
 
 - Open you browser [http://localhost:3000]
 
@@ -28,7 +28,7 @@ If your don't have a smtp server you can sign up for free on (http://mailgun.com
 >To learn about the methodology visit [Mark Forster's website](http://markforster.squarespace.com/autofocus-system/)
 
 
-* Foster's list is implemented as one long list of todos.
+* Forster's list is implemented as one long list of todos.
 * It provides a space for completed tasks and ideas. That's it.
 
 **Getting started**
