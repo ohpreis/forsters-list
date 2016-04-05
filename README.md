@@ -17,7 +17,7 @@ If your don't have a smtp server you can sign up for free on (http://mailgun.com
 
 - Open a terminal window, change into the forsters-list-master directory and run meteor.
 
-    meteor run --settings.json
+    `meteor run --settings.json`
 
 - Open you browser [http://localhost:3000]
 
